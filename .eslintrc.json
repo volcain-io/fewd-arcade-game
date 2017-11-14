@@ -1,8 +1,12 @@
 {
-    "root": true,
-    "env": {
-        "browser": true,
-        "node": true
-    },
-    "extends": "airbnb-base"
+  "root": true,
+  "env": {
+    "browser": true,
+    "node": true
+  },
+  "extends": "airbnb-base",
+  "rules": {
+    "arrow-parens": ["error", "as-needed"],
+    "no-use-before-define": ["error", { "classes": false }]
+  }
 }
