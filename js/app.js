@@ -8,7 +8,13 @@ var COL_OUTSIDE = -101;
 var COL_WIDTH = 101;
 var ROW_HEIGHT = 83;
 
-var TOTAL_SCORE = 0;
+var POINTS_WATER = 50;
+var POINTS_COLLECTABLE = 5;
+var POINTS_ENEMY_HIT = -5;
+
+var MAX_ENEMIES = 3;
+var MAX_LIVES = 3;
+var MAX_COLLECTABLES = 3;
 
 var grid = Array(ROWS)
   .fill()
@@ -28,18 +34,27 @@ function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+/**
+ * @description Calculate the X coordinate.
+ * @param {x} The value of the X coordinate to calculate.
+ * @return {number} A number representing X coordinate multiplied by COL_WIDTH.
+ */
 function getXCoordinate(x) {
   return x * COL_WIDTH;
 }
 
+/**
+ * @description Calculate the Y coordinate.
+ * @param {y} The value of the Y coordinate to calculate.
+ * @return {number} A number representing Y coordinate multiplied by ROW_HEIGHT + ROW_OUTSIDE.
+ */
 function getYCoordinate(y) {
   return y * ROW_HEIGHT + ROW_OUTSIDE;
 }
 
 /** Enemies our player must avoid */
 var Enemy = function() {
-  // The image/sprite for our enemies, this uses
-  // a helper we've provided to easily load images
+  // The image/sprite for our enemies, this uses a helper we've provided to easily load images
   this.sprite = "images/enemy-bug.png";
   this.reset();
 };
@@ -60,15 +75,18 @@ Enemy.prototype.reset = function() {
  * @parameter {dt} a time delta between ticks.
  */
 Enemy.prototype.update = function(dt) {
-  // multiply any movement by the dt parameter which will
-  // ensure the game runs at the same speed for all computers.
+  // multiply any movement by the dt parameter which will ensure the game runs at the same speed for all computers.
   this.x += COL_WIDTH * dt * this.speed;
   // enemy outside of canvas?
   if (this.x > COLS * COL_WIDTH) {
     this.x = -1 * COL_WIDTH;
   }
-  // check for collisions
-  if (this.checkCollisions()) player.reset();
+  // hit by enemy, so update score, live and reset player
+  if (this.checkCollisions()) {
+    player.reset();
+    player.updateScoreBy(-10);
+    player.updateLive(-1);
+  }
 };
 
 /*
@@ -95,6 +113,8 @@ var Player = function(asset) {
   } else {
     this.sprite = "images/char-boy.png";
   }
+  this.points = 0;
+  this.lives = MAX_LIVES;
   this.reset();
 };
 
@@ -107,13 +127,14 @@ Player.prototype.reset = function() {
   this.x = getXCoordinate(this.col);
   this.y = getYCoordinate(this.row);
   grid[this.row][this.col] = true;
+  this.drawLives();
 };
 
 /*
  * @description Updates player position.
  */
 Player.prototype.update = function() {
-  // do a reset, if player reaches top of canvas
+  // top reached: reset player, update score and reset collectables
   if (this.y === ROW_OUTSIDE) {
     this.reset();
     this.updateScoreBy(100);
@@ -124,19 +145,45 @@ Player.prototype.update = function() {
 };
 
 /*
- * @description Update score of the player.
- * @param {num} The number to update the score by.
- */
-Player.prototype.updateScoreBy = function(num) {
-  TOTAL_SCORE += num;
-  document.querySelector("#points").textContent = TOTAL_SCORE;
-};
-
-/*
  * @description Draw the player on the screen.
  */
 Player.prototype.render = function() {
   ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+};
+
+/*
+ * @description Update score of the player.
+ * @param {num} The number to update the score by.
+ */
+Player.prototype.updateScoreBy = function(num) {
+  var tmpPoints = this.points + num;
+  this.points = tmpPoints < 0 ? 0 : tmpPoints;
+  document.querySelector("#points").textContent = this.points;
+};
+
+/*
+ * @description Update life of the player.
+ * @param {num} The number to update the life by.
+ */
+Player.prototype.updateLive = function(num) {
+  var tmpLives = this.lives + num;
+  this.lives = tmpLives < 0 ? 0 : tmpLives;
+  this.drawLives();
+};
+
+/**
+ * @description Draw the lives left.
+ */
+Player.prototype.drawLives = function() {
+  var heartImg = Resources.get("images/Heart.png");
+  heartImg.alt = "Heart";
+  heartImg.width = 20;
+  var outerHTML = "";
+  for (var i = 0; i < this.lives; i++) {
+    outerHTML += heartImg.outerHTML;
+  }
+
+  document.getElementById("lives").innerHTML = outerHTML;
 };
 
 /*
