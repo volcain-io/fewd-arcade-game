@@ -183,13 +183,11 @@ var Engine = (function(global) {
             .then(Effects.show("canvas"))
             .then(Effects.show("#score"))
             .then(function() {
-              for (var i = 0; i < 3; i++) {
-                allEnemies.push(new Enemy());
-              }
               player = new Player(event.target.attributes.src.value);
-              for (var i = 0; i < 3; i++) {
+              for (var i = 0; i < MAX_ENEMIES; i++)
+                allEnemies.push(new Enemy());
+              for (var i = 0; i < MAX_COLLECTABLES; i++)
                 allCollectables.push(new Collectable());
-              }
             })
             .catch(function(e) {
               console.log(e);
@@ -214,7 +212,8 @@ var Engine = (function(global) {
     "images/char-pink-girl.png",
     "images/char-princess-girl.png",
     "images/Star.png",
-    "images/Rock.png"
+    "images/Rock.png",
+    "images/Heart.png"
   ]);
   Resources.onReady(init);
 
