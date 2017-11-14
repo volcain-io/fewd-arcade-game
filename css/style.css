@@ -1,10 +1,38 @@
+@font-face {
+    font-family: 'Games';
+    src: url('../fonts/Games.ttf');
+    font-weight: 100;
+    font-style: normal;
+}
 body {
     text-align: center;
+    font-family: "Games";
+    font-size: 16px;
+}
+
+h1 {
+    font-size: 6rem;
+    font-weight: 100;
+}
+
+h2 {
+    font-size: 4rem;
+    font-weight: 100;
+}
+
+h3 {
+    font-size: 3rem;
+    font-weight: 100;
+}
+
+h3#topScoresTitle {
+    display: none;
 }
 
 img.characters {
     margin: 0;
     padding: 1px;
+    width: 8rem;
 }
 img.characters:hover {
     cursor: pointer;
@@ -12,8 +40,25 @@ img.characters:hover {
     padding-bottom: 0;
 }
 
+div#players {
+    display: table;
+    margin: 0 auto;
+}
+
 div#score {
     display: none;
+}
+
+div#topPoints {
+    display: none;
+}
+div#topPoints > p {
+    font-size: 3rem;
+}
+
+div#restartGame {
+    display: none;
+    cursor: pointer;
 }
 
 canvas {
