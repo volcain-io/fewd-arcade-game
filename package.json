@@ -1,0 +1,30 @@
+{
+  "name": "fewd-arcade-game-master",
+  "version": "1.0.0",
+  "description": "Frogger Game",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/volcain-io/fewd-arcade-game-master.git"
+  },
+  "author": "Volkan Erdogan",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/volcain-io/fewd-arcade-game-master/issues"
+  },
+  "homepage": "https://github.com/volcain-io/fewd-arcade-game-master#readme",
+  "devDependencies": {
+    "eslint": "^4.11.0",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-prettier": "^2.3.1"
+  },
+  "prettier": {
+    "printWidth": 100,
+    "singleQuote": true,
+    "trailingComma": "all"
+  }
+}
