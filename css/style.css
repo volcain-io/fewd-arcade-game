@@ -13,20 +13,12 @@ body {
 h1 {
     font-size: 6rem;
     font-weight: 100;
+    margin: 0.5em 0 0 0;
 }
 
 h2 {
     font-size: 4rem;
     font-weight: 100;
-}
-
-h3 {
-    font-size: 3rem;
-    font-weight: 100;
-}
-
-h3#topScoresTitle {
-    display: none;
 }
 
 img.characters {
@@ -41,26 +33,72 @@ img.characters:hover {
 }
 
 div#players {
-    display: table;
     margin: 0 auto;
 }
 
-div#score {
-    display: none;
-}
-
-div#topPoints {
-    display: none;
-}
 div#topPoints > p {
-    font-size: 3rem;
+    font-size: 2rem;
 }
 
 div#restartGame {
-    display: none;
     cursor: pointer;
 }
 
-canvas {
+.text-big {
+    font-size: 2rem;
+}
+
+.text-bigger {
+    font-size: 3rem;
+}
+
+.text-huge {
+    font-size: 4rem;
+}
+
+.green {
+    color: green;
+}
+
+.orange {
+    color: orange;
+}
+
+.red {
+    color: red;
+}
+
+.blink {
+    animation-name: blink;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+}
+
+.font-verdana {
+    font-family: 'Verdana', sans-serif;
+}
+
+@keyframes blink {
+    0% {color: black;}
+    25% {color: transparent;}
+    50% {color: black;}
+    75% {color: transparent;}
+    100% {color: black}
+}
+
+.flex {
+    display: flex;
+    justify-content: space-around;
+    height: 100%;
+}
+div.flex > div {
+    align-self: center;
+}
+
+.remove {
     display: none;
+}
+
+.hide {
+    visibility: hidden;
 }
