@@ -6,16 +6,22 @@ const MAX_LIVES = 3;
 const MAX_ENEMIES = 3;
 const MAX_COLLECTABLES = 3;
 const ENEMY_SPEED_MIN = 1;
-const ENEMY_SPEED_MAX = 5;
+const ENEMY_SPEED_MAX = 4;
 const POINTS_WATER = 50;
-const POINTS_COLLECTABLE = 5;
+const POINTS_COLLECTABLE_STAR = 5;
+const POINTS_COLLECTABLE_KEY = 15;
+const POINTS_COLLECTABLE_GEM = 25;
 const POINTS_ENEMY_HIT = -5;
+const POINTS_LEVEL_2 = 400;
+const POINTS_LEVEL_3 = 800;
 const ROWS = 6;
 const COLS = 5;
 const ROW_OUTSIDE = -23;
 const COL_WIDTH = 101;
 const ROW_HEIGHT = 83;
 const topScores = [];
+let PLAYER_LEVEL = 1;
+let PLAYER_STRIPE;
 let GRID;
 
 // init player to prevent errors on console output on very first game load.
@@ -45,19 +51,6 @@ const keyUpListener = e => {
 };
 document.addEventListener('keyup', keyUpListener);
 
-/**
- * @description Return randomly generated number including min/max value.
- * @param {min} The minimum value.
- * @param {max} The maximum value.
- * @return {number} A number representing the given range. Returns 0, if the range is not valid.
- */
-function getRandomInt(min, max) {
-  const tmpMin = Math.ceil(min);
-  const tmpMax = Math.floor(max);
-  // prettier-ignore
-  return Math.floor(Math.random() * ((tmpMax - tmpMin) + 1)) + tmpMin;
-}
-
 /** Player class. */
 class Player {
   constructor(sprite = 'images/char-boy.png') {
@@ -66,26 +59,19 @@ class Player {
     this.lives = MAX_LIVES;
     this.reset();
     this.updateLive(0);
+    this.updateScoreBy(0);
   }
 
   /*
   * @description Set x,y-coordinates of the player.
   */
   reset() {
-    Helper.resetGrid();
-    this.col = getRandomInt(0, COLS - 1);
+    this.col = Helper.getRandomInt(0, COLS - 1);
     this.row = ROWS - 1;
     this.x = Helper.getXCoordinate(this.col);
     this.y = Helper.getYCoordinate(this.row);
+    Helper.resetGrid();
     GRID[this.row][this.col] = true;
-  }
-
-  resetAll() {
-    this.points = 0;
-    this.lives = MAX_LIVES;
-    this.updateScoreBy(0);
-    this.updateLive(0);
-    this.reset();
   }
 
   /*
@@ -115,6 +101,7 @@ class Player {
     const tmpPoints = this.points + num;
     this.points = tmpPoints < 0 ? 0 : tmpPoints;
     document.querySelector('#points').textContent = this.points;
+    Helper.levelUp();
   }
 
   /*
@@ -131,18 +118,22 @@ class Player {
    * @description Draw the lives left.
    */
   drawLives() {
-    let outerHTML = '';
-    if (this.lives === 0) {
-      Helper.gameOver();
+    // let outerHTML = '';
+    if (this.lives === MAX_LIVES) {
+      // show all
+      Effects.show('#lives img', true);
     } else {
-      const heartImg = Resources.get('images/Heart.png');
-      heartImg.alt = 'Heart';
-      heartImg.width = 20;
-      for (let i = 0; i < this.lives; i += 1) {
-        outerHTML += heartImg.outerHTML;
-      }
+      Effects.hide(`#lives img:nth-child(${this.lives + 1})`);
+      if (this.lives === 0) Helper.gameOver();
     }
-    document.getElementById('lives').innerHTML = outerHTML;
+    // const heartImg = Resources.get('images/Heart.png');
+    // heartImg.alt = 'Heart';
+    // heartImg.width = 24;
+    // for (let i = 0; i < this.lives; i += 1) {
+    // outerHTML += heartImg.outerHTML;
+    // }
+    // }
+    // document.getElementById('lives').innerHTML = outerHTML;
   }
 
   /*
@@ -174,6 +165,8 @@ class Player {
 class Collectable {
   constructor(sprite = 'images/Star.png') {
     this.sprite = sprite;
+    // prettier-ignore
+    this.max_positions = (ROWS * COLS) - 1;
     this.reset();
   }
 
@@ -181,8 +174,8 @@ class Collectable {
    * @description Set x,y coordinates of the collectable.
    */
   reset() {
-    this.col = getRandomInt(0, COLS - 1);
-    this.row = getRandomInt(0, ROWS - 1);
+    this.col = Helper.getRandomInt(0, COLS - 1);
+    this.row = Helper.getRandomInt(0, ROWS - 1);
     this.findNext();
     this.x = Helper.getXCoordinate(this.col);
     this.y = Helper.getYCoordinate(this.row);
@@ -202,9 +195,12 @@ class Collectable {
       } else {
         this.col += 1;
       }
-      this.findNext();
+      if (this.max_positions > 0) {
+        this.findNext();
+      }
     } else {
       GRID[this.row][this.col] = true;
+      this.max_positions -= 1;
     }
   }
 
@@ -220,7 +216,14 @@ class Collectable {
       this.x = 0 - COL_WIDTH;
       this.y = ROW_OUTSIDE;
 
-      player.updateScoreBy(POINTS_COLLECTABLE);
+      let pointsEarned = POINTS_COLLECTABLE_STAR;
+      if (this.sprite.includes('Key')) {
+        pointsEarned = POINTS_COLLECTABLE_KEY;
+      }
+      if (this.sprite.includes('Gem')) {
+        pointsEarned = POINTS_COLLECTABLE_GEM;
+      }
+      player.updateScoreBy(pointsEarned);
     }
   }
 }
@@ -238,10 +241,10 @@ class Enemy {
    */
   reset() {
     this.col = 0;
-    this.row = getRandomInt(1, 3);
+    this.row = Helper.getRandomInt(1, 3);
     this.x = Helper.getXCoordinate(this.col);
     this.y = Helper.getYCoordinate(this.row);
-    this.speed = Helper.getEnemySpeed();
+    this.speed = Helper.calculateEnemySpeed();
   }
 
   /*
@@ -286,14 +289,28 @@ class Enemy {
   stopMoving() {
     this.speed = 0;
   }
+
+  speedUpBy(num) {
+    this.speed += num;
+  }
 }
 
 class Helper {
   static init(event) {
     return new Promise((resolve, reject) => {
-      const asset = event && event.target.attributes ? event.target.attributes.src.value : null;
-      player = new Player(asset);
-      for (let i = 0; i < MAX_ENEMIES; i += 1) allEnemies.push(new Enemy());
+      // clear all
+      this.clearArray(allEnemies);
+      this.clearArray(allCollectables);
+      // get player asset
+      if (!PLAYER_STRIPE) {
+        PLAYER_STRIPE =
+          event && event.target.attributes ? event.target.attributes.src.value : undefined;
+      }
+      // create game objects
+      player = new Player(PLAYER_STRIPE);
+      for (let i = 0; i < MAX_ENEMIES; i += 1) {
+        allEnemies.push(new Enemy());
+      }
       for (let i = 0; i < MAX_COLLECTABLES; i += 1) {
         allCollectables.push(new Collectable());
       }
@@ -305,7 +322,7 @@ class Helper {
     });
   }
 
-  static getEnemySpeed() {
+  static calculateEnemySpeed() {
     // prettier-ignore
     return (Math.random() * (ENEMY_SPEED_MAX - ENEMY_SPEED_MIN)) + ENEMY_SPEED_MIN;
   }
@@ -330,56 +347,89 @@ class Helper {
   }
 
   static gameOver() {
-    // sort items by descending order
-    topScores.sort((a, b) => b - a);
-    // we just need the top 3 scores
-    if (topScores.length === 3) {
-      let notIn = !topScores.includes(player.points);
-      let scoresLess = topScores.filter(elem => player.points > elem);
-    }
-    topScores.push(player.points);
+    this.reOrderTopScores();
     // display stats
-    Effects.hide('canvas')
-      .then(Effects.hide('#scoreTitle'))
-      .then(Effects.show('#topScoresTitle'))
-      .then(Effects.show('#topPoints'))
+    Effects.remove('canvas')
+      .then(Effects.show('#topScores'))
       .then(Effects.show('#restartGame'))
       .then(() => {
-        Helper.displayStats();
         // stop enemies from moving
         allEnemies.forEach(enemy => enemy.stopMoving());
+        Helper.displayStats();
       })
-      .catch(e => console.log(e));
+      .catch(e => console.error(e));
   }
 
   static displayStats() {
     const topPoints = document.getElementById('topPoints');
     topPoints.innerHTML = '';
-    topScores.forEach(elem => {
+    topScores.forEach((elem, idx) => {
       const p = document.createElement('p');
-      p.textContent = elem;
+      p.textContent = `${idx + 1}. ${elem} Points`;
       topPoints.append(p);
     });
   }
 
+  static reOrderTopScores() {
+    if (!topScores.includes(player.points)) {
+      topScores.push(player.points);
+      // sort items by descending order
+      topScores.sort((a, b) => b - a);
+      if (topScores.length > 3) {
+        topScores.pop();
+      }
+    }
+  }
+
   static restartGame() {
-    Effects.hide('#topScoresTitle')
-      .then(Effects.hide('#topPoints'))
-      .then(Effects.hide('#restartGame'))
-      .then(Effects.show('#scoreTitle'))
+    Effects.remove('#topScores')
+      .then(Effects.remove('#restartGame'))
       .then(Effects.show('canvas'))
-      .then(() => {
-        Helper.resetGrid();
-        player.resetAll();
-        allEnemies.forEach(enemy => enemy.reset());
-        allCollectables.forEach(collectable => collectable.reset());
-      })
-      .catch(e => console.log(e));
+      .then(this.init())
+      .catch(e => console.error(e));
   }
 
   static resetGrid() {
     GRID = Array(ROWS)
       .fill()
       .map(() => Array(COLS).fill(false));
+  }
+
+  static levelUp() {
+    if (player.points < POINTS_LEVEL_2) {
+      PLAYER_LEVEL = 1;
+    }
+    if (PLAYER_LEVEL === 1 && player.points >= POINTS_LEVEL_2) {
+      allEnemies.push(new Enemy());
+      allCollectables.push(new Collectable('images/Key.png'));
+      allEnemies.forEach(enemy => enemy.speedUpBy(1));
+      PLAYER_LEVEL = 2;
+    }
+    if (PLAYER_LEVEL === 2 && player.points >= POINTS_LEVEL_3) {
+      allEnemies.push(new Enemy());
+      allCollectables.push(new Collectable('images/Gem Blue.png'));
+      allEnemies.forEach(enemy => enemy.speedUpBy(2));
+      PLAYER_LEVEL = 3;
+    }
+    document.querySelector('#level').textContent = PLAYER_LEVEL;
+  }
+
+  static clearArray(arr) {
+    while (arr && arr.length) {
+      arr.pop();
+    }
+  }
+
+  /**
+   * @description Return randomly generated number including min/max value.
+   * @param {min} The minimum value.
+   * @param {max} The maximum value.
+   * @return {number} A number representing the given range. Returns 0, if the range is not valid.
+   */
+  static getRandomInt(min, max) {
+    const tmpMin = Math.ceil(min);
+    const tmpMax = Math.floor(max);
+    // prettier-ignore
+    return Math.floor(Math.random() * ((tmpMax - tmpMin) + 1)) + tmpMin;
   }
 }
