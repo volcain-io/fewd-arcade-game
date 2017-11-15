@@ -26,6 +26,7 @@ var Engine = (function(global) {
 
   canvas.width = 505;
   canvas.height = 606;
+  canvas.classList.add('remove');
   doc.body.appendChild(canvas);
 
   /* This function serves as the kickoff point for the game loop itself
@@ -78,16 +79,16 @@ var Engine = (function(global) {
      * on the entities themselves within your app.js file).
      */
   function update(dt) {
-    updateEntities(dt);
     checkCollisions();
+    updateEntities(dt);
   }
 
   function checkCollisions() {
-    allEnemies.forEach(function(enemy) {
-      enemy.checkCollisions();
-    });
     allCollectables.forEach(function(collectable) {
       collectable.checkCollisions();
+    });
+    allEnemies.forEach(function(enemy) {
+      enemy.checkCollisions();
     });
   }
 
@@ -185,7 +186,7 @@ var Engine = (function(global) {
         images[i].attributes.class.value === 'characters'
       ) {
         images[i].addEventListener('click', function(event) {
-          Effects.hide('#players')
+          Effects.remove('#players')
             .then(Effects.show('canvas'))
             .then(Effects.show('#score'))
             .then(Helper.init(event))
@@ -212,8 +213,8 @@ var Engine = (function(global) {
     'images/char-pink-girl.png',
     'images/char-princess-girl.png',
     'images/Star.png',
-    'images/Rock.png',
-    'images/Heart.png',
+    'images/Key.png',
+    'images/Gem Blue.png',
   ]);
   Resources.onReady(init);
 
