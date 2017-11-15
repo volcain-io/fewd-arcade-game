@@ -10,25 +10,42 @@
 
 <body>
     <header>
-        <h1>Frogger Game</h1>
+        <h1 class="green">Frogger Game</h1>
     </header>
-
+    <hr />
     <main>
         <div id="players">
-            <h2>Choose Player</h2>
+            <h2 class="orange">Choose Player</h2>
             <img src="images/char-boy.png" alt="Boy" class="characters">
             <img src="images/char-cat-girl.png" alt="Cat Girl" class="characters">
             <img src="images/char-horn-girl.png" alt="Horn Girl" class="characters">
             <img src="images/char-pink-girl.png" alt="Pink Girl" class="characters">
             <img src="images/char-princess-girl.png" alt="Princess Girl" class="characters">
+            <div class="font-verdana" id="navigation">
+                <h3>Game Play</h3>
+                <p>&uarr;(k)</p>
+                <p>&larr;(h) &darr;(j) &rarr;(l)</p>
+            </div>
         </div>
-        <div id="score">
-            <h3 id="scoreTitle">Score: <span id="points">0</span></h3>
-            <div id="lives"></div>
-            <h3 id="topScoresTitle">Top Scores:</h3>
-            <div id="topPoints"></div>
-            <div id="restartGame" onclick="Helper.restartGame()">Restart Game</div>
+        <div class="text-big flex remove" id="score">
+            <div>
+                Score: <span class="orange" id="points">0</span>
+            </div>
+            <div id="lives">
+                <img src="images/Heart.png" alt="Princess Girl" width="24">
+                <img src="images/Heart.png" alt="Princess Girl" width="24">
+                <img src="images/Heart.png" alt="Princess Girl" width="24">
+            </div>
+            <div>
+                Level: <span class="orange" id="level">1</span>
+            </div>
         </div>
+        <hr />
+        <div class="text-big remove" id="topScores">
+            <p class="red text-bigger" id="topScoresTitle">Top Scores</p>
+            <div class="orange" id="topPoints"></div>
+        </div>
+        <div class="blink text-huge remove" id="restartGame" onclick="Helper.restartGame()">Insert Coin</div>
     </main>
 
     <script src="js/effects.js"></script>
