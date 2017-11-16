@@ -1,19 +1,29 @@
 @font-face {
-    font-family: 'Games';
-    src: url('../fonts/Games.ttf');
+    font-family: "PressStart";
+    src: url("../fonts/PressStart2P.ttf");
     font-weight: 100;
     font-style: normal;
 }
+
+.font-pressStart {
+    font-family: "PressStart";
+}
+
 body {
     text-align: center;
-    font-family: "Games";
+    font-family: "PressStart";
     font-size: 16px;
+    color: white;
+    background-color: black;
+}
+
+hr {
+    border: 0.5rem solid green;
 }
 
 h1 {
-    font-size: 6rem;
+    font-size: 5rem;
     font-weight: 100;
-    margin: 0.5em 0 0 0;
 }
 
 h2 {
@@ -21,14 +31,19 @@ h2 {
     font-weight: 100;
 }
 
+main > div:last-child {
+    padding-top: 2rem;
+}
+
 img.characters {
     margin: 0;
-    padding: 1px;
+    padding: 0.5rem;
     width: 8rem;
 }
+
 img.characters:hover {
     cursor: pointer;
-    border-bottom: 1px solid green;
+    border-bottom: 0.5rem solid orange;
     padding-bottom: 0;
 }
 
@@ -42,6 +57,10 @@ div#topPoints > p {
 
 div#restartGame {
     cursor: pointer;
+}
+
+.mt-2 {
+    margin-top: 2rem;
 }
 
 .text-big {
@@ -74,16 +93,12 @@ div#restartGame {
     animation-iteration-count: infinite;
 }
 
-.font-verdana {
-    font-family: 'Verdana', sans-serif;
-}
-
 @keyframes blink {
-    0% {color: black;}
+    0% {color: white;}
     25% {color: transparent;}
-    50% {color: black;}
+    50% {color: white;}
     75% {color: transparent;}
-    100% {color: black}
+    100% {color: white;}
 }
 
 .flex {
