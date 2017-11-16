@@ -10,7 +10,7 @@
 
 <body>
     <header>
-        <h1 class="green">Frogger Game</h1>
+        <h1 class="green mt-2">FROGGER GAME</h1>
     </header>
     <hr />
     <main>
@@ -21,13 +21,13 @@
             <img src="images/char-horn-girl.png" alt="Horn Girl" class="characters">
             <img src="images/char-pink-girl.png" alt="Pink Girl" class="characters">
             <img src="images/char-princess-girl.png" alt="Princess Girl" class="characters">
-            <div class="font-verdana" id="navigation">
-                <h3>Game Play</h3>
+            <div class="font-pressStart" id="navigation">
+                <h3 class="green">Use Arrow Keys (VIM Mode)</h3>
                 <p>&uarr;(k)</p>
                 <p>&larr;(h) &darr;(j) &rarr;(l)</p>
             </div>
         </div>
-        <div class="text-big flex remove" id="score">
+        <div class="text-big flex remove mt-2" id="score">
             <div>
                 Score: <span class="orange" id="points">0</span>
             </div>
@@ -40,12 +40,11 @@
                 Level: <span class="orange" id="level">1</span>
             </div>
         </div>
-        <hr />
         <div class="text-big remove" id="topScores">
-            <p class="red text-bigger" id="topScoresTitle">Top Scores</p>
+            <p class="red text-bigger" id="topScoresTitle">TOP SCORES</p>
             <div class="orange" id="topPoints"></div>
         </div>
-        <div class="blink text-huge remove" id="restartGame" onclick="Helper.restartGame()">Insert Coin</div>
+        <div class="blink text-huge remove" id="restartGame" onclick="Helper.restartGame()">Insert Coin<br/>Press Start</div>
     </main>
 
     <script src="js/effects.js"></script>
