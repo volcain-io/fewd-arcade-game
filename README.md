@@ -11,7 +11,7 @@ This project is used to play the frogger game.
 A quick introduction of the minimal setup you need to get up running this project.
 
 ```shell
-cd fewd-arcade-game-master/
+cd fewd-arcade-game/
 ```
 
 Open 'index.html' with your favourite web browser.
@@ -81,8 +81,8 @@ In order to display 'index.html' you need a web browser.
 Clone the repository:
 
 ```shell
-git clone https://github.com/volcain-io/fewd-arcade-game-master.git
-cd fewd-arcade-game-master
+git clone https://github.com/volcain-io/fewd-arcade-game.git
+cd fewd-arcade-game
 ```
 
 Happy coding!
