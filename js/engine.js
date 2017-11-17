@@ -185,7 +185,7 @@ var Engine = (function(global) {
         images[i].attributes.class.value === 'characters'
       ) {
         images[i].addEventListener('click', function(event) {
-          Effects.remove('#players')
+          Effects.remove('#playerSelection')
             .then(Effects.show('canvas'))
             .then(Effects.show('#score'))
             .then(Helper.init(event))

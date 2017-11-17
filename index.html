@@ -14,7 +14,7 @@
     </header>
     <hr />
     <main>
-        <div id="players">
+        <div class="players" id="playerSelection">
             <h2 class="orange">Choose Player</h2>
             <img src="images/char-boy.png" alt="Boy" class="characters">
             <img src="images/char-cat-girl.png" alt="Cat Girl" class="characters">
@@ -42,9 +42,9 @@
         </div>
         <div class="text-big remove" id="topScores">
             <p class="red text-bigger" id="topScoresTitle">TOP SCORES</p>
-            <div class="orange" id="topPoints"></div>
+            <div class="orange top-points" id="topPoints"></div>
         </div>
-        <div class="blink text-huge remove" id="restartGame" onclick="Helper.restartGame()">Insert Coin<br/>Press Start</div>
+        <div class="blink text-huge remove restart-game" id="restartGame" onclick="Helper.restartGame()">Insert Coin<br/>Press Start</div>
     </main>
 
     <script src="js/effects.js"></script>

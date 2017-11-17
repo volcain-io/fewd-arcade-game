@@ -47,15 +47,15 @@ img.characters:hover {
     padding-bottom: 0;
 }
 
-div#players {
+div.players {
     margin: 0 auto;
 }
 
-div#topPoints > p {
+div.top-points > p {
     font-size: 2rem;
 }
 
-div#restartGame {
+div.restart-game {
     cursor: pointer;
 }
 
