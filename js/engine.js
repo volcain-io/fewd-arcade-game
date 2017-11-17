@@ -26,8 +26,6 @@ var Engine = (function(global) {
 
   canvas.width = 505;
   canvas.height = 606;
-  // hide canvas, because we have to choose a player first
-  canvas.classList.add('remove');
   doc.body.appendChild(canvas);
 
   /* This function serves as the kickoff point for the game loop itself
@@ -191,6 +189,7 @@ var Engine = (function(global) {
             .then(Effects.show('canvas'))
             .then(Effects.show('#score'))
             .then(Helper.init(event))
+            .then(init)
             .catch(function(e) {
               console.log(e);
             });
@@ -217,7 +216,7 @@ var Engine = (function(global) {
     'images/Key.png',
     'images/Gem Blue.png',
   ]);
-  Resources.onReady(init);
+  Resources.onReady(reset);
 
   /* Assign the canvas' context object to the global variable (the window
    * object when run in a browser) so that developers can use it more easily
