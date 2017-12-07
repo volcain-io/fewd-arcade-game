@@ -29,7 +29,7 @@ let GRID; // 2-dimensional array, used to place the collectables on the play gro
 let player = {
   handleInput() {},
   update() {},
-  render() {},
+  render() {}
 };
 const allEnemies = [];
 const allCollectables = [];
@@ -40,6 +40,7 @@ const allCollectables = [];
  * @param {e} Event to listen for.
  */
 const keyUpListener = e => {
+  e.preventDefault();
   const allowedKeys = {
     37: 'left',
     38: 'up',
@@ -48,12 +49,12 @@ const keyUpListener = e => {
     72: 'left', // vim left 'h'
     74: 'down', // vim down 'j'
     75: 'up', // vim up 'k'
-    76: 'right', // vim right 'l'
+    76: 'right' // vim right 'l'
   };
 
   player.handleInput(allowedKeys[e.keyCode]);
 };
-document.addEventListener('keyup', keyUpListener);
+document.addEventListener('keydown', keyUpListener);
 
 /** Player class. */
 class Player {
