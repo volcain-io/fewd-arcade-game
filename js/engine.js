@@ -26,6 +26,7 @@ var Engine = (function(global) {
 
   canvas.width = 505;
   canvas.height = 606;
+  canvas.className = 'remove';
   doc.body.appendChild(canvas);
 
   /* This function serves as the kickoff point for the game loop itself
@@ -121,7 +122,7 @@ var Engine = (function(global) {
         'images/stone-block.png', // Row 2 of 3 of stone
         'images/stone-block.png', // Row 3 of 3 of stone
         'images/grass-block.png', // Row 1 of 2 of grass
-        'images/grass-block.png', // Row 2 of 2 of grass
+        'images/grass-block.png' // Row 2 of 2 of grass
       ],
       numRows = 6,
       numCols = 5,
@@ -214,7 +215,7 @@ var Engine = (function(global) {
     'images/char-princess-girl.png',
     'images/Star.png',
     'images/Key.png',
-    'images/Gem Blue.png',
+    'images/Gem Blue.png'
   ]);
   Resources.onReady(reset);
 
