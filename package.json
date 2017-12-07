@@ -19,12 +19,9 @@
   "devDependencies": {
     "eslint": "^4.11.0",
     "eslint-config-airbnb-base": "^12.1.0",
-    "eslint-plugin-import": "^2.8.0"
-  },
-  "prettier": {
-    "printWidth": 100,
-    "singleQuote": true,
-    "trailingComma": "all"
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-prettier": "^2.3.1",
+    "prettier": "^1.9.1"
   },
   "dependencies": {}
 }
