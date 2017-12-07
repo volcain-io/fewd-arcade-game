@@ -69,6 +69,6 @@
   window.Effects = {
     hide,
     remove,
-    show,
+    show
   };
 })();
