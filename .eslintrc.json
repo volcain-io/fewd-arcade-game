@@ -1,12 +1,18 @@
 {
-  "root": true,
-  "env": {
-    "browser": true,
-    "node": true
-  },
-  "extends": "airbnb-base",
-  "rules": {
-    "arrow-parens": ["error", "as-needed"],
-    "no-use-before-define": ["error", { "classes": false }]
-  }
+    "root": true,
+    "env": {
+        "browser": true,
+        "node": true,
+        "es6": true
+    },
+    "extends": "airbnb-base",
+    "plugins": ["prettier"],
+    "rules": {
+        "arrow-parens": ["error", "as-needed"],
+        "no-use-before-define": ["error", {
+            "classes": false
+        }],
+        "comma-dangle": ["error", "never"],
+        "quotes": ["error", "single"]
+    }
 }
