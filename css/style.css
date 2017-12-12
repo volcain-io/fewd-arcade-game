@@ -35,13 +35,13 @@ main > div:last-child {
     padding-top: 2rem;
 }
 
-img.characters {
+img.character {
     margin: 0;
     padding: 0.5rem;
     width: 8rem;
 }
 
-img.characters:hover {
+img.character:hover {
     cursor: pointer;
     border-bottom: 0.5rem solid orange;
     padding-bottom: 0;
