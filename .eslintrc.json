@@ -13,6 +13,12 @@
             "classes": false
         }],
         "comma-dangle": ["error", "never"],
-        "quotes": ["error", "single"]
+        "quotes": ["error", "single"],
+        "no-underscore-dangle": ["error", {
+            "allow": ["_load"]
+        }],
+        "no-param-reassign": ["error", {
+            "props": false
+        }]
     }
 }
