@@ -351,6 +351,8 @@ class Helper {
         PLAYER_STRIPE =
           event && event.target.attributes ? event.target.attributes.src.value : undefined;
       }
+      // hide title
+      Effects.remove('h1');
       // create player
       player = new Player(PLAYER_STRIPE);
       // create enemies
