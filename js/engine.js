@@ -185,12 +185,14 @@
     // and initiate Enemy and Player objects
     const characters = document.querySelector('#characters');
     characters.addEventListener('click', event => {
-      Effects.remove('#playerSelection')
-        .then(Effects.show('canvas'))
-        .then(Effects.show('#score'))
-        .then(Helper.init(event))
-        .then(init)
-        .catch(e => console.log(e));
+      if (event.target.classList.contains('character')) {
+        Effects.remove('#playerSelection')
+          .then(Effects.show('canvas'))
+          .then(Effects.show('#score'))
+          .then(Helper.init(event))
+          .then(init)
+          .catch(e => console.log(e));
+      }
     });
   }
 
