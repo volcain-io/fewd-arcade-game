@@ -57,13 +57,13 @@ There are three levels.
 You can earn points if you reach the water and/or collect items.
 If you hit an enemy you will loose points.
 
-| Points | Place / Achievement    | Collectable |
-|-------:|------------------------|-------------|
-| -10    | hit Enemy              |             |
-| 50     | reach Water            |             |
-| 25     | on Water               | Gem         |
-| 15     | paved Block            | Key         |
-| 5      | anywhere on Game Board | Star        |
+| Points | Achievement        | Collectable | Place of Collectable  |
+|-------:|--------------------|-------------|-----------------------|
+| -10    | hitting an enemy   |             |                       |
+| 50     | reaching the water |             |                       |
+| 25     |                    | Gem         | on water              |
+| 15     |                    | Key         | paved block           |
+| 5      |                    | Star        | anywhere on the board |
 
 ## Developing
 
