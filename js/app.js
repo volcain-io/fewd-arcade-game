@@ -107,8 +107,33 @@ class Player {
       const tmpPoints = this.points + num;
       this.points = tmpPoints < 0 ? 0 : tmpPoints;
       document.querySelector('#points').textContent = this.points;
-      Helper.levelUp();
+      // Helper.levelUp();
+      this.levelUp();
     }
+  }
+
+  /*
+   * @description Increase game level, if the user reaches specific points.
+   * If the player reaches Level 2 || Level 3, an enemy and collectable will
+   * be added extra on the game board accordingly and the enemies will get faster.
+   */
+  levelUp() {
+    if (this.points < LEVEL_2_TARGET_POINTS) {
+      PLAYER_LEVEL = 1;
+    }
+    if (PLAYER_LEVEL === 1 && this.points >= LEVEL_2_TARGET_POINTS) {
+      allEnemies.push(new Enemy());
+      allCollectables.push(new Collectable('images/Key.png'));
+      allEnemies.forEach(enemy => enemy.accelerateBy(1));
+      PLAYER_LEVEL = 2;
+    }
+    if (PLAYER_LEVEL === 2 && this.points >= LEVEL_3_TARGET_POINTS) {
+      allEnemies.push(new Enemy());
+      allCollectables.push(new Collectable('images/Gem Blue.png'));
+      allEnemies.forEach(enemy => enemy.accelerateBy(2));
+      PLAYER_LEVEL = 3;
+    }
+    document.querySelector('#level').textContent = PLAYER_LEVEL;
   }
 
   /*
@@ -502,30 +527,6 @@ class Helper {
    */
   static getValueFromGridAt(y, x) {
     return GRID && GRID.length > y && GRID[y].length > x ? GRID[y][x] : false;
-  }
-
-  /*
-   * @description Increase game level, if the user reaches specific points.
-   * If the player reaches Level 2 || Level 3, an enemy and collectable will
-   * be added extra on the game board accordingly and the enemies will get faster.
-   */
-  static levelUp() {
-    if (player.points < LEVEL_2_TARGET_POINTS) {
-      PLAYER_LEVEL = 1;
-    }
-    if (PLAYER_LEVEL === 1 && player.points >= LEVEL_2_TARGET_POINTS) {
-      allEnemies.push(new Enemy());
-      allCollectables.push(new Collectable('images/Key.png'));
-      allEnemies.forEach(enemy => enemy.accelerateBy(1));
-      PLAYER_LEVEL = 2;
-    }
-    if (PLAYER_LEVEL === 2 && player.points >= LEVEL_3_TARGET_POINTS) {
-      allEnemies.push(new Enemy());
-      allCollectables.push(new Collectable('images/Gem Blue.png'));
-      allEnemies.forEach(enemy => enemy.accelerateBy(2));
-      PLAYER_LEVEL = 3;
-    }
-    document.querySelector('#level').textContent = PLAYER_LEVEL;
   }
 
   /*
