@@ -17,11 +17,11 @@
   },
   "homepage": "https://github.com/volcain-io/fewd-arcade-game-master#readme",
   "devDependencies": {
-    "eslint": "^4.18.2",
+    "eslint": "^4.19.1",
     "eslint-config-airbnb-base": "^12.1.0",
-    "eslint-plugin-import": "^2.8.0",
-    "eslint-plugin-prettier": "^2.3.1",
-    "prettier": "^1.9.1"
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-prettier": "^2.7.0",
+    "prettier": "^1.19.1"
   },
   "dependencies": {}
 }
