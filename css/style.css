@@ -22,12 +22,12 @@ hr {
 }
 
 h1 {
-    font-size: 5rem;
+    font-size: 2rem;
     font-weight: 100;
 }
 
 h2 {
-    font-size: 4rem;
+    font-size: 2rem;
     font-weight: 100;
 }
 
@@ -35,10 +35,14 @@ main > div:last-child {
     padding-top: 2rem;
 }
 
+img {
+  max-width: 100%;
+}
+
 img.character {
     margin: 0;
     padding: 0.5rem;
-    width: 8rem;
+    width: 4rem;
 }
 
 img.character:hover {
@@ -64,7 +68,7 @@ div.restart-game {
 }
 
 .text-big {
-    font-size: 2rem;
+    font-size: 1rem;
 }
 
 .text-bigger {
@@ -116,4 +120,19 @@ div.flex > div {
 
 .hide {
     visibility: hidden;
+}
+
+@media only screen and (min-width: 499px) and (min-height: 899px) {
+  h1 {
+    font-size: 5rem;
+  }
+  h2 {
+    font-size: 4rem;
+  }
+  img.character {
+    width: 8rem;
+  }
+  .text-big {
+    font-size: 2rem;
+  }
 }
